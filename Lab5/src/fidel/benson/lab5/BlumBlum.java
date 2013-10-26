@@ -5,7 +5,8 @@ import java.util.Random;
 
 public class BlumBlum {
 	
-	private BigInteger p,q,m,n,s;
+	private BigInteger p,q,n,s;
+	public static BigInteger x;
 	
 	private boolean flag1 =false;
 	private boolean flag2 = false;
@@ -18,7 +19,7 @@ public class BlumBlum {
 	{
 		
 		Random gene = new Random(System.currentTimeMillis());
-		p = BigInteger.probablePrime(128, gene);
+		p = BigInteger.probablePrime(1024, gene);
 		
 		// generate two prime numbers that have the same remainder 3 when devided by 4
 		// Choose two large primes p and q such that p % 4 = q % 4 = 3.
@@ -49,17 +50,27 @@ public class BlumBlum {
 		
 		Random gene2;
 		
-		while(flag2 == false)
+		// generate a random number s that is relatively prime (coprime)to n
+		
+		while(flag3 == false)
 		{
 			gene2 = new Random(System.currentTimeMillis());
-			s = BigInteger.probablePrime(128, gene2);
+			s = new BigInteger (1024, gene2);
 			
 			if(s.gcd(n).equals(BigInteger.ONE))
-					break;
-			
+					flag3 = true;
 		}
 		
+		// x is the seed and should be greater than the square root of n
+		x = (s.multiply(s)).mod(n);
 		
+	}
+	
+	public BigInteger generateRondomNumber()
+	{
+		BigInteger x0 = (x.multiply(x)).mod(n);
+		x = x0;
+		return x0;
 	}
 
 }
