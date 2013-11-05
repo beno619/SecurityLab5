@@ -14,26 +14,60 @@ public class SolovayStrassen {
 			
 			while(true)
 			{
-				a = new BigInteger(num.bitLength(),new Random(System.currentTimeMillis()));
 				
-				if(a.compareTo(num) == 0 || a.compareTo(num) == 1)
+				if((a = new BigInteger(num.bitLength(), new Random(System.currentTimeMillis()))) == BigInteger.ZERO)
 				{
 					continue;
 				}
 				else
 				{
-					 SolovayStrassenRound(a,num);
+					 if(MillerRabinRoud(a,num))
+					 {
+						 return false;
+					 }
+					 break;
 				}
+			
 			}
-		
-		
-		
+
 		}
 		
-		return false;
+		return true;
+	}
+
 		
-		}
+
 	
+	private static boolean MillerRabinRoud(BigInteger a, BigInteger n)
+	{
+		BigInteger nMinusOne = n.subtract(BigInteger.ONE);
+
+		BigInteger d = nMinusOne;
+		int s = d.getLowestSetBit();
+		d = d.shiftRight(s);
+		
+	    BigInteger aModePow = a.modPow(d, n);
+		
+	    if (aModePow.equals(BigInteger.ONE))
+		{
+			return false;
+		}
+		
+	    for (int i = 0; i < s-1; i++) 
+		{
+	        if (aModePow.equals(nMinusOne))
+			{
+				return false;
+			}
+	        aModePow = aModePow.multiply(aModePow).mod(n);
+	    }
+		
+	    if (aModePow.equals(nMinusOne)) 
+		{
+			return false;
+		}
+	    return true;		
+	}
 
 	
 

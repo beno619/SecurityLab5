@@ -19,7 +19,7 @@ public class BlumBlum {
 	{
 		
 		Random gene = new Random(System.currentTimeMillis());
-		p = BigInteger.probablePrime(1024, gene);
+		p = BigInteger.probablePrime(128, gene);
 		
 		// generate two prime numbers that have the same remainder 3 when devided by 4
 		// Choose two large primes p and q such that p % 4 = q % 4 = 3.
@@ -55,7 +55,7 @@ public class BlumBlum {
 		while(flag3 == false)
 		{
 			gene2 = new Random(System.currentTimeMillis());
-			s = new BigInteger (1024, gene2);
+			s = new BigInteger (128, gene2);
 			
 			if(s.gcd(n).equals(BigInteger.ONE))
 					flag3 = true;
